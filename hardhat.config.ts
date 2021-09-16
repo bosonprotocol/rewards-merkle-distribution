@@ -23,12 +23,20 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 task("deploy", "Deploy contracts on a provided network")
 	.addOptionalParam("env", "Which environment is going to be used for contract deployment. Choose between prod, demo, dev or empty for local deployment", "hardhat")
+  // TODO: add parameters: tokenAddr + distribution-file
 	.setAction( async ({env}) => {
 		const { deploy } = await lazyImport('./scripts/deploy')
 		await deploy(env);
 	})
 
-// You need to export an object to set up your config
+task("deploy-token", "Deploy Token on a provided network")
+	.addOptionalParam("env", "Which environment is going to be used for contract deployment. Choose between prod, demo, dev or empty for local deployment", "hardhat")
+	.setAction( async ({env}) => {
+		const { deploy_token } = await lazyImport('./scripts/deploy-token')
+		await deploy_token(env);
+	})
+
+  // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
 /**
