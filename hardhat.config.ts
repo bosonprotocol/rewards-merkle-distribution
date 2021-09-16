@@ -11,6 +11,9 @@ const lazyImport = async (module: any) => {
 	return await import(module);
 }
 
+const ZERO_BYTES32 = '0x0000000000000000000000000000000000000000000000000000000000000000';
+const TOKEN_ADDRESS = '0x976EA74026E726554dB657fA54763abd0C3a0aa9';
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -21,20 +24,24 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
-task("deploy", "Deploy contracts on a provided network")
-	.addOptionalParam("env", "Which environment is going to be used for contract deployment. Choose between prod, demo, dev or empty for local deployment", "hardhat")
-  // TODO: add parameters: tokenAddr + distribution-file
-	.setAction( async ({env}) => {
-		const { deploy } = await lazyImport('./scripts/deploy')
-		await deploy(env);
-	})
+task("deploy", "Deploy contracts on a provided network", async (taskArgs, hre) => {
+  // TODO: add parameters: tokenAddr + distribution-file and compute the merkle proof
+  const [deployer] = await hre.ethers.getSigners();
+  console.log('network', hre.network.name, hre.network.config);
+  console.log('deployer', await deployer.getAddress());
+  // TODO: compute the merkle_root from the distrubution-file
+  const merkle_root = ZERO_BYTES32;
+  const { deploy } = await lazyImport('./scripts/deploy')
+  await deploy(TOKEN_ADDRESS, merkle_root);
+});
 
-task("deploy-token", "Deploy Token on a provided network")
-	.addOptionalParam("env", "Which environment is going to be used for contract deployment. Choose between prod, demo, dev or empty for local deployment", "hardhat")
-	.setAction( async ({env}) => {
-		const { deploy_token } = await lazyImport('./scripts/deploy-token')
-		await deploy_token(env);
-	})
+task("deploy-token", "Deploy Token on a provided network", async (taskArgs, hre) => {
+  const { deploy_token } = await lazyImport('./scripts/deploy-token')
+  const [deployer] = await hre.ethers.getSigners();
+  console.log('network', hre.network.name, hre.network.config);
+  console.log('deployer', await deployer.getAddress());
+  await deploy_token();
+});
 
   // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more

@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Signer, Contract } from "ethers";
 import { deploy_token } from "../scripts/deploy-token";
+import { deploy } from "../scripts/deploy";
 
 const ZERO_BYTES32 = '0x0000000000000000000000000000000000000000000000000000000000000000';
 let deployer: Signer, account1: Signer, account2: Signer, account3: Signer;
@@ -20,13 +21,8 @@ describe("MerkleDistributor", function () {
 
   });
   it("Should deploy the merkleDistributor contract", async function () {
-    const MerkleDistributor = await ethers.getContractFactory("MerkleDistributor");
-    const merkleDistributor = await MerkleDistributor.deploy(token.address, ZERO_BYTES32);
-
-    await merkleDistributor.deployed();
+    const merkleDistributor = await deploy(token.address, ZERO_BYTES32);
   
-    console.log("MerkleDistributor deployed to:", merkleDistributor.address);
-
     expect(await merkleDistributor.token()).to.equal(token.address);
     expect(await merkleDistributor.merkleRoot()).to.equal(ZERO_BYTES32);
     expect(await merkleDistributor.owner()).to.equal(deployerAddr);

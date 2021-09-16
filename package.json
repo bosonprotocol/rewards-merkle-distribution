@@ -9,7 +9,8 @@
   "scripts": {
     "build": "hardhat compile",
     "test": "hardhat test",
-    "deploy": "hardhat deploy"
+    "deploy": "hardhat deploy",
+    "test1": "npx ts-node test/test1.ts"
   },
   "repository": {
     "type": "git",

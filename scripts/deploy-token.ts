@@ -23,9 +23,6 @@ export async function deploy_token(): Promise<Contract> {
   const testERC20 = await TestERC20.deploy(TOKEN_NAME, TOKEN_SYMBOL, TOKEN_AMOUNT);
   const [deployer] = await hre.ethers.getSigners();
 
-  console.log('network', hre.network.name, hre.network.config);
-  console.log('deployer', await deployer.getAddress());
-
   await testERC20.deployed();
 
   console.log("TestERC20 deployed to:", testERC20.address);
