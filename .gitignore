@@ -3,3 +3,10 @@ __pycache__
 .hypothesis/
 build/
 reports/
+
+node_modules
+.env
+
+#Hardhat files
+cache
+artifacts
