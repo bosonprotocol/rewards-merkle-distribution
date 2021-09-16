@@ -10,6 +10,8 @@
     "build": "hardhat compile",
     "test": "hardhat test",
     "deploy": "hardhat deploy",
+    "deploy:rinkeby": "hardhat deploy --network rinkeby",
+    "deploy:ganache": "hardhat deploy --network ganache",
     "test1": "npx ts-node test/test1.ts"
   },
   "repository": {
