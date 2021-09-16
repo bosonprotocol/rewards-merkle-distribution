@@ -1,10 +1,11 @@
-const { expect } = require("chai");
-const { ethers } = require("hardhat");
+import { expect } from "chai";
+import { ethers } from "hardhat";
+import { Signer } from "ethers";
 
 const ZERO_BYTES32 = '0x0000000000000000000000000000000000000000000000000000000000000000';
 const TOKEN_ADDRESS = '0x976EA74026E726554dB657fA54763abd0C3a0aa9';
-let deployer, account1, account2, account3;
-let deployerAddr, account1Addr, account2Addr, account3Addr;
+let deployer: Signer, account1: Signer, account2: Signer, account3: Signer;
+let deployerAddr: string, account1Addr: string, account2Addr: string, account3Addr: string;
 
 describe("MerkleDistributor", function () {
   before('', async() => {
