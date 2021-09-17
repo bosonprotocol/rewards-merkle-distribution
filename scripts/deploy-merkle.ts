@@ -20,7 +20,7 @@ export async function deploy(token_address: string, merkle_root: string): Promis
 
   await merkleDistributor.deployed();
 
-  console.log("MerkleDistributor deployed to:", merkleDistributor.address);
+  console.log("MerkleDistributor deployed to:", merkleDistributor.address, 'with args', token_address, merkle_root);
 
   return merkleDistributor;
 }

@@ -10,3 +10,6 @@ node_modules
 #Hardhat files
 cache
 artifacts
+
+outputs/test1-ganache.json
+outputs/test1-hardhat.json

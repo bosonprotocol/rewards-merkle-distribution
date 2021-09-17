@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { ethers } from "hardhat";
 import { Signer, Contract, BigNumber, BigNumberish } from "ethers";
 import { deploy_token } from "../scripts/deploy-token";
-import { deploy } from "../scripts/deploy";
+import { deploy } from "../scripts/deploy-merkle";
 import { MerkleDistributorInfo, parseBalanceMap } from "../scripts/parse-balance-map";
 
 const ZERO_BYTES32 = '0x0000000000000000000000000000000000000000000000000000000000000000';

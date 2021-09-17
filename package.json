@@ -12,7 +12,7 @@
     "deploy": "hardhat deploy",
     "deploy:rinkeby": "hardhat deploy --network rinkeby",
     "deploy:ganache": "hardhat deploy --network ganache",
-    "test1": "npx ts-node test/test1.ts"
+    "deploy-all": "hardhat run scripts/deploy-all.ts"
   },
   "repository": {
     "type": "git",

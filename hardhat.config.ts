@@ -65,7 +65,7 @@ task("deploy", "Deploy contracts on a provided network", async (taskArgs, hre) =
 task("deploy-token", "Deploy Token on a provided network", async (taskArgs, hre) => {
   const args = await before_deployment(hre);
   const { deploy_token } = await lazyImport('./scripts/deploy-token')
-  await deploy_token();
+  await deploy_token(100000000);
   await after_deployment(args);
 });
 
