@@ -52,12 +52,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
-task("deploy", "Deploy contracts on a provided network", async (taskArgs, hre) => {
+task("deploy", "Deploy MerkleDistributor contract on a provided network", async (taskArgs, hre) => {
   // TODO: add parameters: tokenAddr + distribution-file and compute the merkle proof
   const args = await before_deployment(hre);
-  // TODO: compute the merkle_root from the distrubution-file
+  // TODO: compute the merkle_root from the distribution-file
   const merkle_root = ZERO_BYTES32;
-  const { deploy } = await lazyImport('./scripts/deploy')
+  const { deploy } = await lazyImport('./scripts/deploy-merkle')
   await deploy(TOKEN_ADDRESS, merkle_root);
   await after_deployment(args);
 });
