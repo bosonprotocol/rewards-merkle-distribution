@@ -17,28 +17,6 @@ const lazyImport = async (module: any) => {
 	return await import(module);
 }
 
-function getBalanceAsNumber(bn: BigNumber, decimals: number, accuracy: number) {
-  const r1 = BigNumber.from(10).pow(decimals - accuracy);
-  const r2 = bn.div(r1);
-  const r3 = r2.toNumber();
-  const r4 = r3 / (10 ** accuracy);
-  return r4;
-}
-
-async function before_deployment(hre: any): Promise<{deployer: Signer, balance_before: BigNumber}> {
-  const [deployer] = await hre.ethers.getSigners();
-  const network_config = (({ accounts, ...o }) => o)(hre.network.config) // remove accounts before logging (to not reveal mnemonic)
-  console.log('Network', hre.network.name, network_config);
-  const balance_before = await deployer.getBalance();
-  console.log('Deployer address', await deployer.getAddress(), 'ETH Balance', getBalanceAsNumber(balance_before, 18, 4));
-  return {deployer, balance_before};
-}
-
-async function after_deployment(args: {deployer: Signer, balance_before: BigNumber}) {
-  const balance_after = await args.deployer.getBalance();
-  console.log('Paid fees', getBalanceAsNumber(args.balance_before.sub(balance_after), 18, 4), 'new balance', getBalanceAsNumber(balance_after, 18, 4));
-}
-
 const ZERO_BYTES32 = '0x0000000000000000000000000000000000000000000000000000000000000000';
 const TOKEN_ADDRESS = '0x976EA74026E726554dB657fA54763abd0C3a0aa9';
 
@@ -54,6 +32,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 task("deploy", "Deploy MerkleDistributor contract on a provided network", async (taskArgs, hre) => {
   // TODO: add parameters: tokenAddr + distribution-file and compute the merkle proof
+  const { before_deployment, after_deployment } = await lazyImport('./scripts/utils')
   const args = await before_deployment(hre);
   // TODO: compute the merkle_root from the distribution-file
   const merkle_root = ZERO_BYTES32;
@@ -63,6 +42,7 @@ task("deploy", "Deploy MerkleDistributor contract on a provided network", async 
 });
 
 task("deploy-token", "Deploy Token on a provided network", async (taskArgs, hre) => {
+  const { before_deployment, after_deployment } = await lazyImport('./scripts/utils')
   const args = await before_deployment(hre);
   const { deploy_token } = await lazyImport('./scripts/deploy-token')
   await deploy_token(100000000);
