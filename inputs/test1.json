@@ -1,28 +1,45 @@
-[
-    { "address": "0x6967d7AcD1EC5f210E9590666498e0cC5D13a843", 
-      "earnings": "0x2086ac351052600000"
+[{
+        "address": "0x6967d7AcD1EC5f210E9590666498e0cC5D13a843",
+        "earnings": "0x056bc75e2d63100000"
     },
     {
-      "address": "0xE16955e95D088bd30746c7fb7d76cDA436b86F63",
-      "earnings": "0x30ca024f987b900000"
+        "address": "0xE16955e95D088bd30746c7fb7d76cDA436b86F63",
+        "earnings": "0x0ad78ebc5ac6200000"
     },
     {
-      "address": "0xE08cAFdF3ED12a39c76a6b9DAe5D2f269f900Dc7", 
-      "earnings": "0x2086ac351052600000"
+        "address": "0xE08cAFdF3ED12a39c76a6b9DAe5D2f269f900Dc7",
+        "earnings": "0x1043561a8829300000"
     },
     {
-      "address": "0xB3f6ecCcfD9f24834CA50480F32508b53615383d",
-      "earnings": "0x30ca024f987b900000"
-    },
-    { "address": "0x36Bc959D7Ea2C9B24EE832C19765D9c6C1FCa433", 
-      "earnings": "0x2086ac351052600000"
+        "address": "0xB3f6ecCcfD9f24834CA50480F32508b53615383d",
+        "earnings": "0x15af1d78b58c400000"
     },
     {
-      "address": "0x4FdcE108150157BBc5Ad23EF543C67D73ef71914",
-      "earnings": "0x30ca024f987b900000"
+        "address": "0x36Bc959D7Ea2C9B24EE832C19765D9c6C1FCa433",
+        "earnings": "0x1b1ae4d6e2ef500000"
     },
     {
-      "address": "0x5D03D4F62e5360E13d1c6B0fc5A5300CEED2F349",
-      "earnings": "0x30ca024f987b900000"
+        "address": "0x4FdcE108150157BBc5Ad23EF543C67D73ef71914",
+        "earnings": "0x2086ac351052600000"
+    },
+    {
+        "address": "0x5D03D4F62e5360E13d1c6B0fc5A5300CEED2F349",
+        "earnings": "0x25f273933db5700000"
+    },
+    {
+        "address": "0x84F01c261b612d73e0115263Efa38c7153eb5cC1",
+        "earnings": "0x2b5e3af16b18800000"
+    },
+    {
+        "address": "0xf64c9c22382Ffd8e2614AF7cA1B2b6caF828f97d",
+        "earnings": "0x30ca024f987b900000"
+    },
+    {
+        "address": "0xB4b868E8fDf8d299CDDE4BbcFd83d2D134ca3403",
+        "earnings": "0x3635c9adc5dea00000"
+    },
+    {
+        "address": "0xE7e11582299Cc66b93FdA8375c3a7703A9CC5e34",
+        "earnings": "0x3ba1910bf341b00000"
     }
 ]
