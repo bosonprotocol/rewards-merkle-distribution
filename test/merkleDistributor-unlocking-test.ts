@@ -75,8 +75,17 @@ describe('Merkle-Distributor Unlocking test', async function () {
     await expect(merkleDistributor.connect(deployer).fold())
     .to.be.revertedWith('MerkleDistributor: Claim period has not passed.');
   })
-  it('Increase the next block timestamp by 180 days', async function () {
-    await increaseNextBlockTimestamp(3600*24*180);
+  it('Check the fold is not allowed after 179 days', async function () {
+    await increaseNextBlockTimestamp(3600*24*179);
+    const unlock = await merkleDistributor.unlock();
+    const blockNumber = await ethers.provider.getBlockNumber();
+    const currentBlock = await ethers.provider.getBlock(blockNumber);
+    expect(BigNumber.from(currentBlock.timestamp).lt(unlock)).to.be.true;
+    await expect(merkleDistributor.connect(deployer).fold())
+    .to.be.revertedWith('MerkleDistributor: Claim period has not passed.');
+  })
+  it('Increase the next block timestamp by 1 day more (so 180 days in total)', async function () {
+    await increaseNextBlockTimestamp(3600*24*1);
     const unlock = await merkleDistributor.unlock();
     const blockNumber = await ethers.provider.getBlockNumber();
     const currentBlock = await ethers.provider.getBlock(blockNumber);
