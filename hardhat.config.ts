@@ -1,4 +1,4 @@
-import { task } from "hardhat/config";
+import { task, types } from "hardhat/config";
 import * as dotEnvConfig from "dotenv";
 dotEnvConfig.config();
 
@@ -8,6 +8,8 @@ import "hardhat-gas-reporter";
 import "solidity-coverage";
 import { BigNumber } from "@ethersproject/bignumber";
 import { Signer } from "@ethersproject/abstract-signer";
+import { buildMerkleTreeFromFile, buildOutputFile } from "./scripts/utils";
+import { inputFile } from "hardhat/internal/core/params/argumentTypes";
 
 if (!process.env.MNEMONIC) {
   throw new Error("Please set your MNEMONIC in a .env file");
@@ -30,15 +32,47 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
-task("deploy", "Deploy MerkleDistributor contract on a provided network", async (taskArgs, hre) => {
-  // TODO: add parameters: tokenAddr + distribution-file and compute the merkle proof
-  const { before_deployment, after_deployment } = await lazyImport('./scripts/utils')
-  const args = await before_deployment(hre);
-  // TODO: compute the merkle_root from the distribution-file
-  const merkle_root = ZERO_BYTES32;
-  const { deploy } = await lazyImport('./scripts/deploy-merkle')
-  await deploy(TOKEN_ADDRESS, merkle_root);
-  await after_deployment(args);
+task("deploy", "Deploy MerkleDistributor contract on a provided network")
+  .addOptionalParam("token", "The address of the token contract", undefined, types.string)
+  .addParam("file", "The path to the distribution raw file", undefined, types.string)
+  .setAction(async (taskArgs, hre) => {
+    const { before_deployment, after_deployment } = await lazyImport('./scripts/utils')
+    const args = await before_deployment(hre);
+    // Extract the merkle tree from the distribution-file
+    const merkleTree = await buildMerkleTreeFromFile(taskArgs.file);
+    // Attach to the existing token or deploy a new one
+    let token;
+    let createToken = false;
+    if (!taskArgs.token) {
+      if ((hre.network.name === 'rinkeby') || (hre.network.name === 'mainnet')) {
+        throw new Error('token argument needs to be specified for this network');
+      } else {
+        const { deploy_token } = await lazyImport('./scripts/deploy-token')
+        token = await deploy_token(merkleTree.tokenTotal);
+        createToken = true;
+      }
+    } else {
+      token = await hre.ethers.getContractAt("IERC20", taskArgs.token);
+    }
+    // Deploy the merkleDistributor
+    const { deploy } = await lazyImport('./scripts/deploy-merkle')
+    const merkleDistributor = await deploy(token.address, merkleTree.merkleRoot);
+    // Build the output file
+    const outputFile = `./outputs/${hre.network.name}-${merkleDistributor.address}.json`;
+    buildOutputFile(hre, merkleTree, token, merkleDistributor, taskArgs.file, outputFile);
+    // If possible transfer the funds to the merkleDistributor contract
+    if (createToken) {
+      const txReceipt = await token.transfer(merkleDistributor.address, merkleTree.tokenTotal);
+      await txReceipt.wait();
+      const balance = await token.balanceOf(merkleDistributor.address);
+      console.log('Contract balance:', balance.toString());
+    } else {
+      console.log('You need to transfer', BigNumber.from(merkleTree.tokenTotal).toString(), 'tokens of contract', token.address, 'to', merkleDistributor.address);
+    }
+    if ((hre.network.name === 'rinkeby') || (hre.network.name === 'mainnet')) {
+      console.log(`Please call 'npx hardhat verify --network ${hre.network.name} ${merkleDistributor.address} ${token.address} ${merkleTree.merkleRoot}'`);
+    }
+    await after_deployment(args);
 });
 
 task("deploy-token", "Deploy Token on a provided network", async (taskArgs, hre) => {
