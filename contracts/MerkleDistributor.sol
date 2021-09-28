@@ -18,7 +18,7 @@ contract MerkleDistributor is IMerkleDistributor {
         token = token_;
         merkleRoot = merkleRoot_;
         owner = msg.sender;
-        unlock = block.timestamp + 180 days;
+        unlock = block.timestamp + 365 days;
     }
 
     function isClaimed(uint256 index) public view override returns (bool) {
