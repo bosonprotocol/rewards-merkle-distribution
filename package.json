@@ -10,9 +10,11 @@
         "build": "hardhat compile",
         "test": "hardhat test",
         "deploy": "hardhat deploy",
+        "deploy:mainnet": "hardhat deploy --network mainnet --token \"0xC477D038d5420C6A9e0b031712f61c5120090de9\"",
+        "deploy:rinkeby": "hardhat deploy --network rinkeby --token \"0xEDa08eF1c6ff51Ca7Fd681295797102c1B84606c\"",
         "deploy:rinkeby:preprod": "hardhat deploy --network rinkeby --token \"0xEDa08eF1c6ff51Ca7Fd681295797102c1B84606c\" --file \"./inputs/preprod.json\"",
-        "deploy:rinkeby:test": "hardhat deploy --network rinkeby --token \"0xEDa08eF1c6ff51Ca7Fd681295797102c1B84606c\" --file \"https://gateway.pinata.cloud/ipfs/QmaMcau8LYz2hXqiC4KEi3W2x1idn8VzcrYE4hz734Dmjk\"",
-        "deploy:ganache:test": "hardhat deploy --network ganache --file \"https://gateway.pinata.cloud/ipfs/QmaMcau8LYz2hXqiC4KEi3W2x1idn8VzcrYE4hz734Dmjk\"",
+        "deploy:rinkeby:test": "hardhat deploy --network rinkeby --token \"0xEDa08eF1c6ff51Ca7Fd681295797102c1B84606c\" --file \"https://gateway.pinata.cloud/ipfs/QmUHRm3qyQUrtBUV6j9sZMnsU5vdacWqDu4Li9qYUyfzKf\"",
+        "deploy:ganache:test": "hardhat deploy --network ganache --file \"https://gateway.pinata.cloud/ipfs/QmUHRm3qyQUrtBUV6j9sZMnsU5vdacWqDu4Li9qYUyfzKf\"",
         "deploy-all": "hardhat run scripts/deploy-all.ts",
         "deploy:preprod": "hardhat deploy --token \"0x5FbDB2315678afecb367f032d93F642f64180aa3\" --file \"./inputs/preprod.json\""
     },

@@ -33,7 +33,7 @@ export async function buildMerkleTreeFromFile(filePath: string): Promise<MerkleD
   } else {
     json = JSON.parse(fs.readFileSync(filePath, { encoding: 'utf8' }));
   }
-  console.log(json);
+  // console.log(json);
   if (typeof json !== 'object') throw new Error('Invalid JSON')
   return parseBalanceMap(json);
 }

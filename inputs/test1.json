@@ -41,5 +41,9 @@
     {
         "address": "0xE7e11582299Cc66b93FdA8375c3a7703A9CC5e34",
         "earnings": "0x3ba1910bf341b00000"
+    },
+    {
+        "address": "0x56334e16D24DB1dF8bd54708B88f96b8dd112145",
+        "earnings": "0x02738be87510cfdfa2"
     }
 ]

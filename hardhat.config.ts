@@ -120,6 +120,16 @@ module.exports = {
           path: "m/44'/60'/0'/0",
       },
     },
+    mainnet: {
+      chainId: 1,
+      url: `https://mainnet.infura.io/v3/${process.env.INFURA_API_KEY}`,
+      accounts: {
+          count: 10,
+          initialIndex: 0,
+          mnemonic: process.env.MNEMONIC,
+          path: "m/44'/60'/0'/0",
+      },
+    },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,
